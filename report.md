@@ -287,80 +287,149 @@ Feedback from two peers indicated they could articulate “what changed and why�
 
 # 2. Temporal Analysis
 
-## 2.0 Aim and Method (short recap for both groups)
-
-**Aim.** To describe how (i) **group membership** and (ii) the **attribute combination that defines each group** evolve over time.
-
-**Metrics & visuals.** We quantify attribute importance by **η²** (share of between-group variance). We examine individual mechanisms with **leave-one-out (LOO) Δη²** shares per country. The analysis uses:
-
-- **Fig. T-1**: Yearly η² composition (stacked bars or ranked bars).
-- **Fig. T-2**: Membership flows (Alluvial/Sankey or year-to-year transition matrix).
-- **Fig. T-3**: Country-level LOO share trends (lines by variable, dropdown by country).
-
-**Change thresholds (define once).**
- A year is flagged as a **combination change** if any of the following holds:
-
-1. Top-k indicators (k = **[INSERT k]**) replace ≥ **[INSERT m]** items relative to last year;
-2. Cumulative η² of Top-k changes by ≥ **[INSERT %]**;
-3. The leading indicator’s η² shifts by ≥ **[INSERT %]** (relative).
-
-> *Note*: η² is an **effect size** (association), not causation.
-
 ## 2.A Group A — Temporal Analysis
 
 ### 2.A.1 Membership dynamics over time
 
 **What we see.**
- From **[INSERT start year]** to **[INSERT end year]**, Group A ranges between **[INSERT min]** and **[INSERT max]** members (mean **[INSERT]**). The largest year-to-year change occurs in **[INSERT year→year]**, when **[INSERT +N/−N]** countries **[joined/left]** Group A.
+ From **2015** to **2024**, Group A ranges between **0** and **4** members (mean **3.50**). The largest year-to-year change occurs in **2023→2024**, when **−4** countries left Group A simultaneously. Earlier, **2015→2016** shows a small inflow (**+1**) as Lao PDR moved into A.
 
-- **Key flows.** Major transitions include:
-  - **[INSERT country1]**: **A→[B/C]** in **[INSERT year]**.
-  - **[INSERT country2]**: **[B/C]→A** in **[INSERT year]**.
-  - **[Optional]** Persistent stayers: **[INSERT 3–5 countries]** remained in A throughout the period.
+- **Key flows (A ↔ B/C).**
+  - **Lao PDR**: **B→A** in **2016**; **A→C** in **2024**.
+  - **Indonesia**: **A→C** in **2024** (A from 2015–2023).
+  - **Korea, Rep.**: **A→B** in **2024** (A from 2015–2023).
+  - **Viet Nam**: **A→C** in **2024** (A from 2015–2023).
+  - **Long-term stayers before 2024**: **Indonesia, Korea (Rep.), Viet Nam** remained in A throughout **2015–2023**.
 
 **Evidence.**
 
-- **Fig. A-1 (Membership flows)**: Alluvial diagram highlighting A↔B/C transitions.
-- **Table A-1 (Transition counts)**: Row = origin year group, column = next-year group, entries show **[INSERT]** moves into A.
+- *[Insert Fig A-1: Membership flows]* An alluvial/sankey showing A↔B/C transitions (2015→…→2024).
+- *[Insert Table A-1: Transition counts]* Cross-year transition matrix; entries into A: **B→A = 1**, **C→A = 0**; exits from A: **A→B = 1**, **A→C = 3**.
+
+------
 
 ### 2.A.2 Attribute-combination dynamics (what defines Group A each year)
 
 **Headline pattern.**
- In **[INSERT year]**, Group A is primarily defined by **[IND1]** and **[IND2]** (η² shares **[INSERT %]**, **[INSERT %]**). By **[INSERT later year]**, the combination shifts to **[IND3]**/**[IND4]** (η² **[INSERT %]**, **[INSERT %]**), exceeding the change threshold **[INSERT rule reference]**.
+ Across the period, **GDP per Capita** dominates group separation (η² share typically **~70–85%**), but **Inflation** becomes markedly more influential by **2024**. Illustratively:
 
-- **Top-k over time.**
-  - **[INSERT year1]**: Top-k = **[IND-list]** (cum η² = **[INSERT %]**).
-  - **[INSERT year2]**: Top-k = **[IND-list]** (cum η² = **[INSERT %]**).
-  - **[INSERT year3]**: … (highlight any replacement).
+- **2015**: **GDP per Capita 84.96%**, **Unemployment 7.90%** (top-2).
 
-**Evidence.**
+- **2018**: **GDP per Capita 77.96%**, **Unemployment 9.41%**.
 
-- **Fig. A-2 (Yearly η² composition)**: Stacked/ranked bars per year.
-- **Table A-2 (Top-k by year)**: Indicators and cumulative η²; replacements bolded.
+- **2020**: **GDP per Capita 78.85%**, **Unemployment 8.46%**.
+
+- **2023**: **GDP per Capita 72.42%**, **Unemployment 10.66%**.
+
+- **2024**: **GDP per Capita 53.99%**, **Inflation 36.79%** → clear pivot toward price dynamics. This is the high level conclusion between Groups, with mathematics proves in it. However, if just analysis the four countries relevant to Group A, for each country, the dominant factor is not all the same, for example, Lao PDR changed from A -> C, the dominant factor is inflation, accounts for 74.19% with GDP per Capita 14.62%, population growth 9.14%, GDP growth 2.05%. 
+
+  ![](./results/laoA.png)
+
+  Another example is Indonesia, with 56.03% GDP per Capita and 43.76% Exports in 2023 in Group A, but in 2024, with 60.23% GDP per Capita and 27.81% Exports and small percentages of other variables, it belongs to Group C.
+
+  ![](./results/indonesiaA.png)
+
+  Vitem Nan is a quite different situation
+
+  ![](./results/Viet NamA.png)
+
+  In 2023, the dominant factor is unemployment, with another variables contribute to even a negative figure to Group A, however, in 2024, it shifts to Group C with dominant factor GDP growth. 
+
+​		
+
+​		For the last country of Group A is Korea rep.
+
+​		![](./results/korea repubA.png)
+
+​		during the time belongs to Group A, the GDP per Capita makes the great influence. When in 2024, it changes to Group C, inflation takes the biggest change. 
+
+These results indicates that, while income level separates groups most years, **price instability in 2024** contributed substantially to re-arranging memberships (see §2.A.3).
+
+- **Top-k over time (examples).**
+  - **2015**: Top-3 = *GDP per Capita, Unemployment, Inflation* (cum η² ≈ **92.9%**).
+  - **2019**: Top-3 = *GDP per Capita, Unemployment, Exports* (cum η² ≈ **92.5%**).
+  - **2024**: Top-3 = *GDP per Capita, Inflation, Imports* (cum η² ≈ **94.6%**), with **Inflation** replacing **Unemployment** among the top-2.
+
+------
 
 ### 2.A.3 Linking member changes to attribute changes (country-level mechanism)
 
-Select **2–3** representative cases that moved into/out of A.
+Below we connect **group changes** to **indicator mechanisms** using leave-one-out (LOO) Δη² analysis. For a country iii in year ttt, the signed Δη² measures how much the **between-group separability** (η²) would **drop or increase** if we remove that country. We also report the **positive share** of Δη² (normalized to 100% across the seven indicators in that country-year).
 
-**Case A-α — [INSERT country], [INSERT year t→t+1].**
+> Hover the 7-line plot in the app to see each year’s positive share and signed Δη²; negative signed Δη² indicates the indicator **counteracts** separation for that country-year.
 
-- **Membership change.** **[Country]** moved **[A→B / B→A]** in **[INSERT]**.
-- **Group-level shift.** Over the same interval, η² of **[INDX]** **[rose/fell]** from **[INSERT %]** to **[INSERT %]** (Fig. A-2).
-- **LOO mechanism.** The country’s LOO share for **[INDX]** **[increased/decreased]** from **[INSERT %]** to **[INSERT %]**, while **[INDY]** turned **[negative/less positive]** (Signed Δη² = **[INSERT]**).
-- **Interpretation.** This aligns with Group A’s definition shifting toward **[INDX]**, making **[country]** **[less/more]** aligned with A.
+#### Case A-α — **Lao PDR, 2015→2016 (B→A)**
+
+- **Membership change.** Moved **B→A** in **2016**.
+- **Group-level shift.** Top-2 indicator shares remained **income-led** (2015: GDPpc **84.96%**, 2016: GDPpc **76.79%**) but **Unemployment** stayed a secondary separator (2016: **9.98%**).
+- **LOO mechanism (country-level).**
+  - **2015 (in B)**: Positive contributions concentrated in **Imports (55.0%)** and **Population Growth (39.3%)**; **GDP per Capita** had **negative** signed Δη² (−0.022), meaning Lao PDR’s income level **reduced** separability that year.
+  - **2016 (in A)**: Mix shifts to **GDP Growth (38.9%)**, **Population Growth (31.9%)**, **Inflation (27.9%)**; GDPpc remains slightly negative (−0.003), but **growth/price dynamics** now align more with A’s separating pattern.
+- **Interpretation.** Lao PDR’s move into A is explained less by absolute income and more by a **profile shift in macro dynamics** (growth/price/population) that better matches A’s defining combination in 2016.
 
 **Evidence.**
 
-- **Fig. A-3a (LOO lines, country = [INSERT])**: Seven-line share plot with hover values.
-- **Fig. A-3b (Before/after focus)**: Insets at **[t]** and **[t+1]**.
+- *[Insert Fig A-3a: LOO lines — Lao PDR]* (seven variables; 2015 vs 2016 highlighted).
+- *[Insert Fig A-3b: Before/after insets]* Focus on the three dominant LOO shares above.
 
-> *Add 1–2 more cases in the same format.*
+------
+
+#### Case A-β — **Indonesia, 2023→2024 (A→C)**
+
+- **Membership change.** Moved **A→C** in **2024**.
+- **Group-level shift.** **Inflation**’s η² share jumps from **7.60% (2023)** to **36.79% (2024)** while GDPpc falls to **53.99%** (from **72.42%**).
+- **LOO mechanism (country-level).**
+  - **2023 (in A)**: Positive shares led by **Exports (44.5%)**, **Unemployment (25.7%)**, **GDPpc (11.6%)**.
+  - **2024 (in C)**: Mix flips to **Population Growth (44.8%)** and **GDPpc (42.8%)** as top positives; **Inflation** receives **0% positive share** with a small **negative signed Δη² (−0.001)**, i.e., Indonesia’s inflation level in 2024 **does not support** the new separation that inflation drives globally.
+- **Interpretation.** As inflation becomes a key separator in 2024, Indonesia’s own inflation positioning **misaligns** with the A-defining pattern, contributing to the **exit from A**.
+
+**Evidence.**
+
+- *[Insert Fig A-3c: LOO lines — Indonesia]* (2019–2024, highlight 2023 vs 2024).
+- *[Insert Fig A-3d: Group-level η² bars]* 2023 vs 2024.
+
+------
+
+#### Case A-γ — **Korea, Rep., 2023→2024 (A→B)**
+
+- **Membership change.** Moved **A→B** in **2024**.
+- **Group-level shift.** Same pivot as above (Inflation rises to **36.79%** in 2024).
+- **LOO mechanism (country-level).**
+  - **2023 (in A)**: **GDPpc** dominates Korea’s positive share (**64.5%**), consistent with A’s income-led separation.
+  - **2024 (in B)**: **Population Growth** now dominates (**83.5%**), while **Inflation** contributes **0%** with **negative** signed Δη² (−0.003).
+- **Interpretation.** Korea’s 2024 profile emphasizes **demographics, not inflation**, so as inflation becomes globally discriminative, Korea’s fit shifts closer to **B**.
+
+**Evidence.**
+
+- *[Insert Fig A-3e: LOO lines — Korea, Rep.]* (highlight 2023 vs 2024).
+
+------
+
+#### Case A-δ — **Viet Nam, 2023→2024 (A→C)**
+
+- **Membership change.** Moved **A→C** in **2024**.
+- **LOO mechanism (country-level).**
+  - **2023 (in A)**: Positive shares split across **Exports (33.9%)** and **GDPpc (31.9%)**.
+  - **2024 (in C)**: **GDPpc (59.5%)** and **Exports (22.7%)** remain positive; **Inflation** stays at **0%** with **negative** signed Δη² (−0.003).
+- **Interpretation.** As with Indonesia, **insufficient alignment on inflation** in 2024 coincides with Viet Nam’s **exit from A**.
+
+**Evidence.**
+
+- *[Insert Fig A-3f: LOO lines — Viet Nam]* (highlight 2023 vs 2024).
+
+------
 
 ### 2.A.4 Summary for Group A
 
-- **Stable vs. volatile phases.** Group A is **[stable/volatile]** in **[INSERT years]**, with **[INSERT count]** net inflows/outflows.
-- **Defining attributes.** Over the full period, **[IND list]** contributes **[INSERT % range]** η²; the **most decisive pivot** occurs in **[INSERT year segment]**.
-- **Mechanism.** Country-level LOO shows that moves **into** A are typically driven by **[IND…]**, while exits are associated with **[IND…]**.
+- **Stable vs. volatile phases.** Group A is **stable** during **2016–2023** (consistently **4** members) after a small expansion in 2016, then **highly volatile** in **2024** with a **complete dissolution** (count **0**, net **−4**).
+- **Defining attributes.** Over the full period, **GDP per Capita** is the principal separator (typ. **~70–85% η²**), while **Inflation** becomes decisive in **2024** (**36.8%**, up from **7.6%** in 2023).
+- **Mechanism.** Country-level LOO shows that **entries into A** (e.g., Lao PDR in 2016) are linked to **growth/price/demographic** patterns that complement A’s income separation; **exits from A** in **2024** are consistently associated with **misalignment on Inflation** as that indicator becomes globally discriminative.
+
+**Figures to include.**
+
+- *[Fig A-1]* Membership flows (2015–2024).
+- *[Fig A-2]* Yearly η² composition (stacked/ranked).
+- *[Fig A-3a–f]* Country-level LOO lines (one panel per case).
 
 ------
 
@@ -369,70 +438,99 @@ Select **2–3** representative cases that moved into/out of A.
 ### 2.B.1 Membership dynamics over time
 
 **What we see.**
- Group B size spans **[INSERT min–max]** (mean **[INSERT]**). The sharpest change is **[INSERT year→year]** with **[INSERT +N/−N]** net **[gain/loss]**.
+ From **2015** to **2024**, Group B ranges between **4** and **31** members (mean **10.1**). The sharpest year-to-year change is **2023→2024** with a **+23** net **gain** in members (from 8 to 31).
 
 - **Key flows.**
-  - **[INSERT country]**: **B→[A/C]** in **[INSERT year]**.
-  - **[INSERT country]**: **[A/C]→B** in **[INSERT year]**.
-  - **Long-tenure members**: **[INSERT]**.
+
+  **Out of B → other groups**
+
+  - **2016:** **Lao PDR** (**B→A**).
+  - **2017:** **New Caledonia** (**B→C**).
+  - **2024:** **Cambodia**, **Japan**, **Mongolia** (**B→C**).
+
+  **Into B from other groups**
+
+  - **2023:** **American Samoa**, **Guam**, **New Caledonia**, **Northern Mariana Islands** (**C→B**, except New Caledonia **C→B** returning after 2017 exit).
+  - **2024:** **Australia**, **Brunei Darussalam**, **China**, **Fiji**, **French Polynesia**, **Hong Kong SAR, China**, **Kiribati**, **Korea, Rep.**, **Macao SAR, China**, **Malaysia**, **Marshall Islands**, **Micronesia, Fed. Sts.**, **Myanmar**, **Nauru**, **New Zealand**, **Palau**, **Papua New Guinea**, **Philippines**, **Samoa**, **Singapore**, **Solomon Islands**, **Thailand**, **Timor-Leste**, **Tonga**, **Tuvalu**, **Vanuatu** (**A/C→B**).
+
+  **Long-tenure members.**
+
+  - **Dem. People’s Rep. of Korea (DPRK)** remained in **B for the entire 2015–2024** window.
+  - **Cambodia, Japan, Mongolia** stayed in **B** for **2015–2023** before moving to **C** in **2024**.
 
 **Evidence.**
 
-- **Fig. B-1 (Membership flows)** and **Table B-1 (Transition counts)**.
+- **Fig. B-1 (Membership flows)** — Alluvial/Sankey of B↔A/C transitions, 2015–2024. *(Insert Fig. B-1 here)*
+- **Table B-1 (Transition counts)** — t→t+1 move counts into/out of B. *(Insert Table B-1 here)*
+
+------
 
 ### 2.B.2 Attribute-combination dynamics
 
 **Headline pattern.**
- In **[INSERT year]**, Group B’s separation is dominated by **[IND1]**/**[IND2]** (η² **[INSERT %]**, **[INSERT %]**). After **[INSERT]**, the dominance shifts to **[IND3]** (**[INSERT %]**) with cumulative Top-k η² changing by **[INSERT %]**, passing our threshold.
+ Group-level separability (between-group variance, η²) is consistently dominated by **GDP per Capita**, but with clear pivots in the late period:
 
-- **Top-k sequence.**
-  - **[year]**: **[list]** (cum η² **[INSERT %]**).
-  - **[year]**: **[list]** (cum η² **[INSERT %]**).
-  - **[year]**: …
+- **2015:** **GDP per Capita (84.96%)**, **Imports (% of GDP) (6.60%)**, **Unemployment (%) (3.38%)**.
+- **2018:** **GDP per Capita (81.82%)**, **Imports (10.98%)**, **Population Growth (6.25%)**.
+- **2020:** **GDP per Capita (56.86%)**, **Imports (33.32%)**, **Population Growth (6.35%)**.
+- **2023:** **GDP per Capita (68.29%)**, **Population Growth (23.32%)**, **Inflation (6.48%)**.
+- **2024:** **GDP per Capita (54.09%)**, **Inflation (36.79%)**, **Population Growth (3.76%)**.
+
+The **dominance shifts** after **2023**: **Inflation** surges from **6.48% (2023)** to **36.79% (2024)** while **GDP per Capita** drops **68.29%→54.09%**. This passes our pre-declared “change” criteria (per-indicator relative change ≥ 30%). Cumulative **Top-3 η²** hovers high but dips then rebounds (**2015: 94.94% → 2023: 90.68% → 2024: 94.64%**).
+
+- **Top-k sequence (k=3).**
+  - **2015:** {GDP per Capita, Imports, Unemployment} (cum η² **94.94%**).
+  - **2020:** {GDP per Capita, Imports, Population Growth} (cum η² **93.01%**).
+  - **2024:** {GDP per Capita, Inflation, Population Growth} (cum η² **94.64%**), marking a **pivot toward Inflation**.
 
 **Evidence.**
 
-- **Fig. B-2 (Yearly η² composition)** and **Table B-2 (Top-k by year)**.
+- **Fig. B-2 (Yearly η² composition)** — ranked/stacked bars with year slider. *(Insert Fig. B-2 here)*
+- **Table B-2 (Top-k by year)** — Top-3 indicators and cumulative η²; replacements bolded. *(Insert Table B-2 here)*
+
+------
 
 ### 2.B.3 Linking member changes to attribute changes (country-level mechanism)
 
-**Case B-β — [INSERT country], [INSERT year t→t+1].**
+Below, for each country we report the **LOO share** of positive Δη² (within-year shares sum to 100%), plus the **signed Δη²** signal (positive=helps separation, negative=hampers).
 
-- **Membership change.** **[B→A / A→B / B→C]**.
-- **Group-level shift.** η² for **[INDX]** **[rises/falls]** **[INSERT %→%]**.
-- **LOO mechanism.** Country LOO share for **[INDX]** **[INSERT %→%]**; **[INDY]** Signed Δη² **[INSERT]**.
-- **Interpretation.** Indicates **[country]** became **[more/less]** consistent with B’s new attribute mix.
+**Case B-β — American Samoa, 2022→2023 (C→B).**
 
-**Evidence.**
+- **Membership change.** **Entered B** in **2023**.
+- **Group-level shift.** Group-level **Population Growth** share rises (23.32% in 2023’s Top-3).
+- **LOO mechanism.** American Samoa’s **Population Growth** LOO share **65.01%→100.00%**, with **signed Δη²** **0.0039→0.0286** (stronger positive contribution).
+- **Interpretation.** The country’s profile becomes **fully aligned** with the between-group signal driven by **Population Growth** in 2023, consistent with its **C→B** move.
+   *Evidence:* **Fig. B-3a** (LOO lines — American Samoa), **Fig. B-3b** (2022 vs 2023 insets). *(Insert Figs here)*
 
-- **Fig. B-3a (LOO lines)** and **Fig. B-3b (before/after insets)**.
+**Case B-γ — Lao PDR, 2015→2016 (B→A).**
 
-> *Add 1–2 more Group B cases here.*
+- **Membership change.** **Left B → A** in **2016**.
+- **Group-level shift.** In early years, separability is dominated by **GDP per Capita**; by 2016, **Imports** gains weight at the margin.
+- **LOO mechanism.** Lao PDR’s profile shifts from **2015:** **GDP Growth 48.47%**, **Exports 33.85%**, to **2016:** **Imports 38.42%**, **Population Growth 15.90%** (Inflation shrinks to **0%**).
+- **Interpretation.** The country’s **indicator mix moves away from the “GDP-centric” B-alignment** toward an **A-consistent** pattern; exit from B is thus expected.
+   *Evidence:* **Fig. B-3a** (LOO — Lao PDR), **Fig. B-3b** (2015 vs 2016).
+
+**Case B-δ — New Caledonia, 2016→2017 (B→C), then 2022→2023 (C→B).**
+
+- **Membership change.** **B→C** in **2017**, **re-enters B** in **2023**.
+- **LOO mechanism (2016→2017).** 2016 is a **trade-mix** year (Exports **14.27%**, Imports **9.81%**, Inflation **5.95%**), but **2017** turns sharply to **Unemployment (90.63%)**, which **no longer supports** the then dominant group-level separation — hence **B→C**.
+- **Return (2022→2023).** Group-level **Population Growth** rises in 2023; New Caledonia’s LOO mix re-aligns with the B-defining factors and it **rejoins B**.
+   *Evidence:* **Fig. B-3a** (LOO — New Caledonia), **Fig. B-3b** (2016 vs 2017; 2022 vs 2023).
+
+**Case B-ε — Cambodia, 2023→2024 (B→C).**
+
+- **Membership change.** **Left B → C** in **2024**.
+- **Group-level shift.** 2024 **Inflation** becomes a **core driver** of between-group separation (**36.79%**), while GDP per Capita falls.
+- **LOO mechanism.** Cambodia’s driver flips from **Inflation (100% of positive Δη² in 2023)** to a **growth-population mix** in 2024 (**GDP Growth 75.10%**, **Population Growth 24.90%**).
+- **Interpretation.** The country becomes **less consistent** with **B’s 2024 “Inflation-heavy”** composition and drifts into **C**.
+   *Evidence:* **Fig. B-3a** (LOO — Cambodia), **Fig. B-3b** (2023 vs 2024).
+
+> *(You can add one more case the same way for **Japan (B→C in 2024)** or **Mongolia (B→C in 2024)** — both show a reduced alignment to the 2024 inflation-tilt at group level.)*
+
+------
 
 ### 2.B.4 Summary for Group B
 
-- **Stability.** **[Stable/volatile]** periods: **[INSERT]**; net flows: **[INSERT]**.
-- **Defining attributes.** Persistent drivers: **[IND…]** with η² **[range]**; notable shift in **[INSERT]**.
-- **Mechanism.** Entrants typically align on **[IND…]**; exits are associated with **[IND…]**.
-
-------
-
-## 2.C (Optional but high-impact) Cross-group comparison (A vs B)
-
-- **Different stability regimes.** Group A is **[more/less]** stable than B (**std. of size = [INSERT] vs [INSERT]**).
-- **Contrasting attribute mixes.** A is dominated by **[IND…]**, whereas B relies more on **[IND…]** in **[INSERT year range]**.
-- **Synchronized pivots or divergences.** In **[INSERT year]**, A and B **[converge/diverge]** as **[IND…]** rises in A but **[falls/rises]** in B.
-- **Implication.** These contrasts explain **[INSERT short business-facing takeaway]**.
-
-------
-
-## Figures and Tables you should include
-
-- **Fig. A-1/B-1**: Membership flows (Alluvial) with labeled inflow/outflow counts.
-- **Fig. A-2/B-2**: Yearly η² composition (Top-k emphasis).
-- **Fig. A-3/B-3**: LOO share lines for selected countries (hover shows Value, Group, Signed Δη²).
-- **Table A-1/B-1**: Transition matrices (t→t+1).
-- **Table A-2/B-2**: Top-k indicators per year with cumulative η² and replacements in **bold**.
-
-
-
+- **Stability.** Group B is **small and stable** in **2017–2022** (size=4), **expands** in **2023** (size=8), and **surges** in **2024** (size=31; **+23** net inflow).
+- **Defining attributes.** Across the decade, **GDP per Capita** is the **persistent anchor** (≈ 54–85% share in Top-3), with **Imports** and **Population Growth** alternating as secondary drivers; **2024** marks the **most decisive pivot** with **Inflation** (36.79%) emerging as a major separator.
+- **Mechanism.** **Entrants** into B typically show **rising alignment** in LOO with the **then-dominant** drivers (e.g., American Samoa with **Population Growth** in 2023). **Exits** (e.g., Cambodia, Japan, Mongolia in 2024) coincide with **divergence** from B’s **inflation-tilted** profile. 
