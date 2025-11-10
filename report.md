@@ -641,3 +641,74 @@ Below, for each country we report the **LOO share** of positive Δη² (within-y
 
 # task3
 
+# 3.B 2022→2023 membership shifts (what changed & why)
+
+## Who moved?
+
+Exactly **4** countries changed group in 2022→2023, all **C → B**:
+ **American Samoa, Guam, New Caledonia, Northern Mariana Islands.**
+
+## Group-level context shift (B vs the rest)
+
+Using your dataset, Group B’s separability pivoted clearly between the two years:
+
+- **2022 (B one-vs-rest η² shares):** **Inflation 30.78%**, **Imports 26.30%**, **Unemployment 13.64%**, **Population Growth 12.46%**, **GDP Growth 9.48%**, **GDP per Capita 4.94%**, **Exports 2.40%**.
+- **2023 (B one-vs-rest η² shares):** **Unemployment 46.42%**, **Population Growth 38.44%**, **Imports 12.13%**, **Inflation 2.19%**, **GDP per Capita 0.72%**, **GDP Growth ~0%**, **Exports 0.10%**.
+
+**Interpretation:** B flips from a **trade/price** profile (Inflation + Imports) in 2022 to a **labor/demographics** profile (Unemployment + Population Growth) in 2023. Movers tend to align with this new axis.
+
+------
+
+## Country-level cases (2022→2023)
+
+### Case B-α — American Samoa (C → B)
+
+- **Membership change.** Entered **B** in **2023**.
+- **Group-level shift.** B switches to **Unemployment/Population Growth** in 2023 (38.44% / 46.42%), away from **Inflation/Imports** (30.78% / 26.30%) in 2022.
+- **LOO mechanism.**
+  - **2022 top:** *Population Growth 65.01%* (**Δη² +0.0039**), *GDP per Capita 16.83%* (+0.0010), *GDP Growth 14.84%* (+0.0009).
+  - **2023 top:** *Population Growth 100.00%* (**Δη² +0.0286**).
+- **Interpretation.** Strong **demographic alignment** emerges exactly when B becomes **population/unemployment-driven**, making the C → B move expected.
+
+------
+
+### Case B-β — Guam (C → B)
+
+- **Membership change.** Entered **B** in **2023**.
+- **Group-level shift.** Same flip to **labor/demographics** at group level.
+- **LOO mechanism.**
+  - **2022 top:** *Exports 71.93%* (**Δη² +0.0014**), *GDP per Capita 16.16%* (+0.0003), *Unemployment 11.92%* (+0.0002).
+  - **2023:** **No positive Δη²** (all ≤ 0; largest-magnitude: *Population Growth*, **Δη² −0.0080**).
+- **Interpretation.** Guam **joins B** as the global boundary shifts toward **demographics/labour**; its profile sits **near the new boundary** (hence weak/negative LOO contributions) but now clusters with B. In short: **membership flips with the global pivot**, even though Guam’s own incremental contribution to separability is neutral/negative.
+
+------
+
+### Case B-γ — New Caledonia (C → B)
+
+- **Membership change.** Re-enters **B** in **2023**.
+- **LOO mechanism.**
+  - **2022:** **No positive Δη²** (Σ Δη²⁺ = 0; Σ Δη²⁻ = −0.0363).
+  - **2023:** **No positive Δη²** (Σ Δη²⁺ = 0; Σ Δη²⁻ = −0.0110).
+- **Interpretation.** As the **group-level axis** rotates from **Inflation/Imports** to **Unemployment/Population**, New Caledonia’s relative position **shifts toward B** even though its own LOO signal is **boundary-like** (non-reinforcing). The **system-wide re-clustering** explains the C → B move.
+
+------
+
+### Case B-δ — Northern Mariana Islands (C → B)
+
+- **Membership change.** Entered **B** in **2023**.
+- **Group-level shift.** Same pivot to **Population Growth/Unemployment**.
+- **LOO mechanism.**
+  - **2022 top:** *Population Growth 68.69%* (**Δη² +0.0041**), *Exports 25.54%* (+0.0015).
+  - **2023 top:** *Population Growth 100.00%* (**Δη² +0.0321**).
+- **Interpretation.** A **decisive demographic alignment** in 2023 (both share and signed Δη² jump), squarely matching B’s new defining axis → **C → B**.
+
+------
+
+## Common pattern (what the four movers share)
+
+- **Direction:** All **C → B**.
+- **Why now:** **Group B’s axis rotates** from **price/trade** (2022) to **labor/demographics** (2023).
+- **Country signals:**
+  - Two movers (**American Samoa**, **Northern Mariana Islands**) show **clear, positive Population-Growth signals** in 2023 (LOO share **100%**, signed Δη² jumps **+0.0286 / +0.0321**).
+  - Two movers (**Guam**, **New Caledonia**) have **boundary-like** LOO in 2023 (no positive Δη²), yet **still flip** because **the global partition itself moved**; they now sit on B’s side of the **population/unemployment** boundary even if their single-country removal doesn’t raise η².
+- **Takeaway:** **Membership changes in 2023 are driven primarily by the \*system-level shift\* in what defines B** (toward **Population Growth & Unemployment**). Countries with **strong demographic signals** (AS, NMI) actively **reinforce** separability; **borderline profiles** (Guam, New Caledonia) are **carried** by the re-clustering.
