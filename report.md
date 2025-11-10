@@ -26,7 +26,7 @@ I maintained a change log for each visualisation iteration (from z-scores to $\e
 
 # 2. Visualisation contributions (15 pts)
 
-## 2.1 Rationale for switching from z-scores to $\eta^2$
+## 2.1 Rationale for switching from z-scores to $\eta^2$ to One-vs-Rest $\eta^2$
 
 Early prototypes used z-scores to "highlight" unusual values. 
 $$
@@ -58,7 +58,38 @@ $$
 SS_{between}=80,\; SS_{total}=100 \Rightarrow \eta^2=0.8.
 $$
 
-> **[INSERT FIG REF]**
+**Although** this method is effective in a high level, but if we wanna delve into each group, we have to slightly adjust our method. From $\eta^2$ to One-vs-Rest One-vs-Rest $\eta^2$
+
+## 2) What is the new computation? *(One-vs-Rest: a chosen group vs the rest, via* $\eta^2$*)*
+
+**Goal.** For a given focal group (e.g., **Group B**), identify which indicators make “B vs the rest” easiest to separate.
+
+**Method.** Binarise the groups: set the focal group to **1**, and merge **all other groups** into **0** (one-vs-rest). For each indicator $v$, compute an ANOVA-style effect size $\eta^2$ using only these two classes:
+$$
+\eta^2_{\text{focal vs rest}}(v)
+=
+\frac{\,n_{1}\,(\bar{x}_{1}-\bar{x})^{2}\;+\;n_{0}\,(\bar{x}_{0}-\bar{x})^{2}\,}
+{\sum_{i}\,(x_{i}-\bar{x})^{2}}.
+$$
+
+**Where**
+- Class **“1”** is the **focal group** (e.g., “Group B*”), with sample size $n_{1}$ and mean $\bar{x}_{1}$.
+- Class **“0”** is the **union of all remaining groups**, with sample size $n_{0}$ and mean $\bar{x}_{0}$.
+- $\bar{x}$ is the **overall mean** (across all units for that year and indicator).
+- The denominator is the **total sum of squares** $SS_{\text{total}}=\sum_{i}(x_i-\bar{x})^2$.
+
+**Normalisation to shares (per year).** For a fixed year, take the seven values $\eta^2_{\text{focal vs rest}}(v)$ across indicators $v$ and normalise along the **indicator** dimension so that they sum to $100\%$:
+$$
+\text{share}(v)
+=
+\frac{\eta^2_{\text{focal vs rest}}(v)}
+{\sum_{u}\eta^2_{\text{focal vs rest}}(u)}
+\times 100\%.
+$$
+
+**Note on focal-group dependence.** Because changing the focal group changes $n_{1},\bar{x}_{1}$ (and thus $n_{0},\bar{x}_{0}$), the resulting $\eta^2_{\text{focal vs rest}}(v)$ values—and therefore the normalised shares—**will differ** across choices of focal group (e.g., “B vs rest” will not match “C vs rest”).
+
+> ==这里可以补充一个最后的计算例子==
 
 ## 2.2 Country-level marginal contribution via leave-one-out $\Delta\eta^2$
 
@@ -157,7 +188,7 @@ Uniform axis ranges (0–100%). No imputation; missing data simply produces gaps
 
 ## 2.5 Evaluation of the visualisations
 
-I evaluated both correctness and utility. Like I mentioned before, the contributes can not use the z-score contribution because for some variables the contribution can be negative. So the direction can not simply use the abosute value to represent. The second reflection is that when i implement the visualization, i found for most time the GDP per Capita always remain the big part, i realized there is one fault i made is i didn't normalize each variables, some of the measurement is % but others are values. So i normalize the data and fixed the problem. There are other refinement like color- friendly, remove overlapping also implemented during optimization. So here are the results. 
+==这里是重点，写的更清晰一点，怎么个过程==I evaluated both correctness and utility. Like I mentioned before, firstly i used z-score, but the contributes can not use the z-score contribution because for some variables the contribution can be negative. So the direction can not simply use the abosute value to represent. That's why i shifted to $ \eta^2 $ , when implementing the $ \eta^2$ i found we need to focus on each Group not seen them as a whole. Therefore, finally i used the One-vs-Rest $ \eta^2$ mentioned in &2.1. The second reflection is that when i implement the visualization, i found for most time the GDP per Capita always remain the big part, i realized there is one fault i made is i didn't normalize each variables, some of the measurement is % but others are values. So i normalize the data and fixed the problem. There are other refinement like color- friendly, remove overlapping also implemented during optimization. So here are the results. 
 
 # Group level
 
@@ -175,7 +206,7 @@ I evaluated both correctness and utility. Like I mentioned before, the contribut
 
 - **Legend (top-right):** click to toggle indicators; **double-click** an item to isolate it.
 - **Year slider (bottom):** scrubs the timeline; each position animates to that year’s distribution.
-- **Hover tooltip:** shows the year and the indicator’s share; also lists the **full set of Group B members** for that year and their **count**.
+- **Hover tooltip:** shows the year and the indicator’s share; also lists the **full set of Group A/B/C members** for that year and their **count**.
 - **Dynamic annotation (right panel):** updates with the **member count** and quick interaction tips.
 
 ### Reading the chart
@@ -183,7 +214,21 @@ I evaluated both correctness and utility. Like I mentioned before, the contribut
 1. Pick a **year** from the slider at the bottom.
 2. Compare **bar heights** to see which indicators most explain the separation that year (e.g., a tall GDP-per-capita bar means it dominates explanation that year).
 3. Use the legend to focus on a subset (e.g., only prices-related indicators).
-4. Hover any bar to verify the exact % and check who is in **Group B** for that year.
+4. Hover any bar to verify the exact % and check who is in **Group A/B/C** for that year.
+
+
+
+# Group A
+
+![](./results/visual3A.png)
+
+# Group B
+
+![](./results/visual4B.png)
+
+# Group C
+
+![](./results/visual5C.png)
 
 
 
@@ -310,30 +355,57 @@ Feedback from two peers indicated they could articulate “what changed and why�
 
 ### 2.A.2 Attribute-combination dynamics (what defines Group A each year)
 
-**Headline pattern.**
- Across the period, **GDP per Capita** dominates group separation (η² share typically **~70–85%**), but **Inflation** becomes markedly more influential by **2024**. Illustratively:
+![](./results/visual3A.png)
 
-- **2015**: **GDP per Capita 84.96%**, **Unemployment 7.90%** (top-2).
+![](./results/visual3A2019.png)
 
-- **2018**: **GDP per Capita 77.96%**, **Unemployment 9.41%**.
+![](./results/visual3A2023.png)
 
-- **2020**: **GDP per Capita 78.85%**, **Unemployment 8.46%**.
+![](./results/visual3A2024C.png)
 
-- **2023**: **GDP per Capita 72.42%**, **Unemployment 10.66%**.
 
-- **2024**: **GDP per Capita 53.99%**, **Inflation 36.79%** → clear pivot toward price dynamics. This is the high level conclusion between Groups, with mathematics proves in it. However, if just analysis the four countries relevant to Group A, for each country, the dominant factor is not all the same, for example, Lao PDR changed from A -> C, the dominant factor is inflation, accounts for 74.19% with GDP per Capita 14.62%, population growth 9.14%, GDP growth 2.05%. 
 
-  ![](./results/laoA.png)
+**Headline pattern.**  
+Across the observable years for Group A, **GDP per Capita** is the dominant separator versus the rest, but its dominance eases over time while **Inflation** becomes more material. By **2024** Group A has **no members**; at the system level the separation pattern pivots toward price dynamics (see Group-C context below).
 
-  Another example is Indonesia, with 56.03% GDP per Capita and 43.76% Exports in 2023 in Group A, but in 2024, with 60.23% GDP per Capita and 27.81% Exports and small percentages of other variables, it belongs to Group C.
+### 2015 *(Fig. A-2a)*
+- **Top driver:** GDP per Capita — **94.35%**  
+- **Next:** Imports — **2.74%**, Inflation — **1.53%**  
+- **Top-3 cumulative:** **98.62%**
 
-  ![](./results/indonesiaA.png)
+### 2020 *(Fig. A-2b)*
+- **GDP per Capita:** **86.08%**
+- **Next:** Inflation — **7.09%**, Imports — **2.33%**
+- **Others:** Unemployment **1.98%**, GDP Growth **1.87%**, Population Growth **0.58%**, Exports **0.06%**
+- **Top-3 cumulative:** **95.50%**
 
-  Vitem Nan is a quite different situation
+### 2023 *(Fig. A-2c)*
+- **GDP per Capita:** **79.05%**
+- **Unemployment:** **9.27%**
+- **Inflation:** **8.50%**
+- **Then:** Imports — **3.07%**; others ≈ **0%**
+- **Top-3 cumulative:** **96.82%**  
+  *Change note:* **Unemployment** re-enters the Top-2, displacing **Imports**; exceeds our “Top-k replacement” rule.
 
-  ![](./results/Viet NamA.png)
+### 2024 *(system-level context, Fig. A-2d)*
+- **Status:** Group A dissolves (**0 members**).
+- **Overall partition (one-vs-rest mix):** For the group that absorbs former A-members (**Group C** in 2024), shares are:  
+  GDP per Capita **53.99%**, Inflation **36.79%**, Imports **3.86%**, GDP Growth **3.56%**.  
+  *Interpretation:* evidence of a pivot from **income level** to **inflation pressure** in explaining the boundaries between groups.
 
-  In 2023, the dominant factor is unemployment, with another variables contribute to even a negative figure to Group A, however, in 2024, it shifts to Group C with dominant factor GDP growth. 
+This is the high level conclusion between Groups, with mathematics proves in it. However, if just analysis the four countries relevant to Group A, for each country, the dominant factor is not all the same, for example, Lao PDR changed from A -> C, the dominant factor is inflation, accounts for 74.19% with GDP per Capita 14.62%, population growth 9.14%, GDP growth 2.05%. 
+
+![](./results/laoA.png)
+
+Another example is Indonesia, with 56.03% GDP per Capita and 43.76% Exports in 2023 in Group A, but in 2024, with 60.23% GDP per Capita and 27.81% Exports and small percentages of other variables, it belongs to Group C.
+
+![](./results/indonesiaA.png)
+
+Vitem Nan is a quite different situation
+
+![](./results/Viet NamA.png)
+
+In 2023, the dominant factor is unemployment, with another variables contribute to even a negative figure to Group A, however, in 2024, it shifts to Group C with dominant factor GDP growth. 
 
 ​		
 
@@ -345,10 +417,11 @@ Feedback from two peers indicated they could articulate “what changed and why�
 
 These results indicates that, while income level separates groups most years, **price instability in 2024** contributed substantially to re-arranging memberships (see §2.A.3).
 
-- **Top-k over time (examples).**
-  - **2015**: Top-3 = *GDP per Capita, Unemployment, Inflation* (cum η² ≈ **92.9%**).
-  - **2019**: Top-3 = *GDP per Capita, Unemployment, Exports* (cum η² ≈ **92.5%**).
-  - **2024**: Top-3 = *GDP per Capita, Inflation, Imports* (cum η² ≈ **94.6%**), with **Inflation** replacing **Unemployment** among the top-2.
+- **Top-k over time (illustrative).**
+  - **2015:** Top-3 = *GDP per Capita, Imports, Inflation* → **98.62%**.
+  - **2020:** Top-3 = *GDP per Capita, Inflation, Imports* → **95.50%**.
+  - **2023:** Top-3 = *GDP per Capita, Unemployment, Inflation* → **96.82%**.
+  - **2024 (context):** *GDP per Capita, Inflation, Imports* in the absorbing group (Group C) → **94.64%**.
 
 ------
 
@@ -421,15 +494,27 @@ Below we connect **group changes** to **indicator mechanisms** using leave-one-o
 
 ### 2.A.4 Summary for Group A
 
-- **Stable vs. volatile phases.** Group A is **stable** during **2016–2023** (consistently **4** members) after a small expansion in 2016, then **highly volatile** in **2024** with a **complete dissolution** (count **0**, net **−4**).
-- **Defining attributes.** Over the full period, **GDP per Capita** is the principal separator (typ. **~70–85% η²**), while **Inflation** becomes decisive in **2024** (**36.8%**, up from **7.6%** in 2023).
-- **Mechanism.** Country-level LOO shows that **entries into A** (e.g., Lao PDR in 2016) are linked to **growth/price/demographic** patterns that complement A’s income separation; **exits from A** in **2024** are consistently associated with **misalignment on Inflation** as that indicator becomes globally discriminative.
+##### 1. Stable vs. volatile phases
 
-**Figures to include.**
+- **2015:** 3 members  
+- **2016:** expands to **4** (net **+1**)  
+- **2017–2023:** stable at **4**  
+- **2024:** **dissolves to 0** (net **−4**)  
+- **Pattern:** long stable phase → abrupt dissolution.
 
-- *[Fig A-1]* Membership flows (2015–2024).
-- *[Fig A-2]* Yearly η² composition (stacked/ranked).
-- *[Fig A-3a–f]* Country-level LOO lines (one panel per case).
+##### 2. Defining attributes
+
+- **2015 → 2023:** **GDP per Capita** is the principal separator (**≈79–94%** $\eta^2$, year-dependent).  
+- **Secondary drivers rotate:**
+  - **2015:** Imports / Inflation
+  - **2020:** Inflation takes the #2 slot
+  - **2023:** Unemployment enters the Top-2
+- **2024 (system-level pivot):** Overall partition shifts toward **Inflation**. In Group C (which absorbs former A members), one-vs-rest shares are **53.99%** GDP per Capita vs **36.79%** Inflation — consistent with A’s dissolution.
+
+##### 3. Mechanism *(link to §2.A.3)*
+- **LOO profiles (country-level):** Entries into A during the stable phase align with **high GDP per Capita** (income-led separation).  
+- **2024 exits:** As **Inflation** becomes system-wide discriminative, former A members no longer match the prior *income-led* signature.  
+- **Action for report:** Insert per-country LOO panels for movers to show which indicators **flipped sign** or **surged in share**.
 
 ------
 
@@ -467,26 +552,47 @@ Below we connect **group changes** to **indicator mechanisms** using leave-one-o
 
 ### 2.B.2 Attribute-combination dynamics
 
-**Headline pattern.**
- Group-level separability (between-group variance, η²) is consistently dominated by **GDP per Capita**, but with clear pivots in the late period:
+![](./results/visual4B.png)
 
-- **2015:** **GDP per Capita (84.96%)**, **Imports (% of GDP) (6.60%)**, **Unemployment (%) (3.38%)**.
-- **2018:** **GDP per Capita (81.82%)**, **Imports (10.98%)**, **Population Growth (6.25%)**.
-- **2020:** **GDP per Capita (56.86%)**, **Imports (33.32%)**, **Population Growth (6.35%)**.
-- **2023:** **GDP per Capita (68.29%)**, **Population Growth (23.32%)**, **Inflation (6.48%)**.
-- **2024:** **GDP per Capita (54.09%)**, **Inflation (36.79%)**, **Population Growth (3.76%)**.
+![](./results/visual4B2022.png)
 
-The **dominance shifts** after **2023**: **Inflation** surges from **6.48% (2023)** to **36.79% (2024)** while **GDP per Capita** drops **68.29%→54.09%**. This passes our pre-declared “change” criteria (per-indicator relative change ≥ 30%). Cumulative **Top-3 η²** hovers high but dips then rebounds (**2015: 94.94% → 2023: 90.68% → 2024: 94.64%**).
 
-- **Top-k sequence (k=3).**
-  - **2015:** {GDP per Capita, Imports, Unemployment} (cum η² **94.94%**).
-  - **2020:** {GDP per Capita, Imports, Population Growth} (cum η² **93.01%**).
-  - **2024:** {GDP per Capita, Inflation, Population Growth} (cum η² **94.64%**), marking a **pivot toward Inflation**.
 
-**Evidence.**
+![](./results/visual4B2023.png)
 
-- **Fig. B-2 (Yearly η² composition)** — ranked/stacked bars with year slider. *(Insert Fig. B-2 here)*
-- **Table B-2 (Top-k by year)** — Top-3 indicators and cumulative η²; replacements bolded. *(Insert Table B-2 here)*
+
+
+![](./results/visual4B2024.png)
+
+![](./results/visual4B2023C.png)
+
+
+
+**Headline pattern.**  
+Unlike Group A, **Group B’s separability rotates across indicators**. Early years are led by **Imports** and **Unemployment**; the mid-period flips to **GDP Growth / Inflation**; **2023** is dominated by **labour/demographics** (*Unemployment + Population Growth*); **2024** pivots sharply to **Income + Prices** (*GDP per Capita + Inflation*).
+
+### Year-by-year
+- **2015:** Imports **33.33%**, Unemployment **22.28%**, Exports **18.82%**; GDP per Capita close but lower (**18.09%**).
+- **2018:** GDP Growth **53.37%**, Inflation **22.28%**, Imports **14.96%**.
+- **2020:** Unemployment **40.77%**, Inflation **26.72%**, Imports **22.75%**.
+- **2022:** Inflation **30.78%**, Imports **26.30%**, Unemployment **13.64%** *(Population Growth **12.46%**)*.
+- **2023:** Unemployment **46.42%**, Population Growth **38.44%**, Imports **12.13%**.
+- **2024:** GDP per Capita **53.99%**, Inflation **36.79%**, Imports **3.86%**; others ≤ **3.56%**.
+
+### Dominance shift
+From **2023 → 2024** the center of gravity moves from **labour/demographics** to **income/price** dynamics:
+- Unemployment **46.42% → ~0%**  
+- Population Growth **38.44% → 1.13%**  
+- GDP per Capita **0.72% → 53.99%**  
+- Inflation **2.19% → 36.79%**  
+This easily exceeds the “change” rule (≥30% relative move for a top indicator).
+
+### Top-k sequence *(k = 3)*
+- **2015:** {Imports, Unemployment, Exports} — cumulative $\eta^2$ **74.43%**.  
+- **2020:** {Unemployment, Inflation, Imports} — cumulative $\eta^2$ **90.24%**.  
+- **2024:** {GDP per Capita, Inflation, Imports} — cumulative $\eta^2$ **94.64%** *(clear pivot toward income/price).*  
+
+*Source:* values are taken from the one-vs-rest bar charts for **2015, 2018, 2020, 2022, 2023, 2024**.
 
 ------
 
@@ -494,7 +600,7 @@ The **dominance shifts** after **2023**: **Inflation** surges from **6.48% (2023
 
 Below, for each country we report the **LOO share** of positive Δη² (within-year shares sum to 100%), plus the **signed Δη²** signal (positive=helps separation, negative=hampers).
 
-**Case B-β — American Samoa, 2022→2023 (C→B).**
+**==这里的case补充一个整体的那么多国家的整体shift==Case B-β — American Samoa, 2022→2023 (C→B).**
 
 - **Membership change.** **Entered B** in **2023**.
 - **Group-level shift.** Group-level **Population Growth** share rises (23.32% in 2023’s Top-3).
@@ -525,12 +631,29 @@ Below, for each country we report the **LOO share** of positive Δη² (within-y
 - **Interpretation.** The country becomes **less consistent** with **B’s 2024 “Inflation-heavy”** composition and drifts into **C**.
    *Evidence:* **Fig. B-3a** (LOO — Cambodia), **Fig. B-3b** (2023 vs 2024).
 
-> *(You can add one more case the same way for **Japan (B→C in 2024)** or **Mongolia (B→C in 2024)** — both show a reduced alignment to the 2024 inflation-tilt at group level.)*
+
 
 ------
 
-### 2.B.4 Summary for Group B
+## 2.B.4 Summary for Group B
 
-- **Stability.** Group B is **small and stable** in **2017–2022** (size=4), **expands** in **2023** (size=8), and **surges** in **2024** (size=31; **+23** net inflow).
-- **Defining attributes.** Across the decade, **GDP per Capita** is the **persistent anchor** (≈ 54–85% share in Top-3), with **Imports** and **Population Growth** alternating as secondary drivers; **2024** marks the **most decisive pivot** with **Inflation** (36.79%) emerging as a major separator.
-- **Mechanism.** **Entrants** into B typically show **rising alignment** in LOO with the **then-dominant** drivers (e.g., American Samoa with **Population Growth** in 2023). **Exits** (e.g., Cambodia, Japan, Mongolia in 2024) coincide with **divergence** from B’s **inflation-tilted** profile. 
+### Stability
+- **2017–2022:** small and steady — size **= 4** each year  
+- **2023:** expands to **8**  
+- **2024:** surges to **31** (**net +23**)
+
+### Defining attributes
+- **2015:** separation led by **Imports** and **Unemployment**.  
+- **2018–2020:** turns toward **GDP Growth / Inflation / Unemployment**.  
+- **2022:** **Inflation + Imports**.  
+- **2023:** **Unemployment + Population Growth** dominate (≈ **85%** combined).  
+- **2024:** decisive pivot to **GDP per Capita (53.99%)** and **Inflation (36.79%)**.
+
+### Mechanism
+- **Entrants** tend to align with the then-dominant signals in the **LOO** profiles (e.g., *American Samoa* in **2023** lines up with the labour/demographic pattern).  
+- **Major exits in 2024** — *Cambodia, Japan, Mongolia*, etc. — coincide with the switch toward **income/price** separation, as their country-level profiles diverge from Group B’s new mix.
+
+### Top-k recap *(k = 3)*
+- **2015:** {Imports, Unemployment, Exports} — **74.43%** (cumulative $\eta^2$).  
+- **2020:** {Unemployment, Inflation, Imports} — **90.24%** (cumulative $\eta^2$).  
+- **2024:** {GDP per Capita, Inflation, Imports} — **94.64%** → pivot to **Inflation + income level**.
